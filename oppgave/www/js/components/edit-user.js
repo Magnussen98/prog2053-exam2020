@@ -5,7 +5,7 @@ class EditUser extends LitElement {
     return {
       user: { type: Object },
       displayUser: { type: String },
-      changePwd: { type: String }
+      changePwd: { type: String },
     };
   }
 
@@ -36,7 +36,7 @@ class EditUser extends LitElement {
           <div class="email d-flex flex-column mt-2 ps-0">
             <label for="email">Email</label>
             <input type="email" id="uname" class="uname" value="${this.user.uname}" style="width: 70%">
-            <input type="hidden" id="uid" class="uid" value="${this.user.uid}" style="width: 70%">
+            <input type="hidden" id="id" class="uid" value="${this.user.uid}" style="width: 70%">
           </div>
           <div class="firstName d-flex flex-column mt-2 ps-0">
             <label for="firstName">First name</label>
@@ -56,7 +56,9 @@ class EditUser extends LitElement {
             <input type="password" id="pwd" class="pwd" value="" style="width: 70%">
           </div>
 
-          <button class="btn btn-sm btn-success" @click="${(e) => this.changeUser(e)}">Change user</li>
+          <div>
+            <button class="btn btn-sm btn-success mt-3 center" @click="${(e) => this.changeUser(e)}">Change user</button>
+          </div>
       </form>
 
 
@@ -67,8 +69,11 @@ class EditUser extends LitElement {
 
     // Change the user!
   changeUser(e){
-    e.preventDefault();
+    e.preventDefault();     // Prevents from auto submitting
+
+    
     var data = new FormData(e.target.form)
+    console.log(Array.from(data))
 
     fetch('/api/updateUser.php', {
       method: 'POST',
@@ -77,8 +82,10 @@ class EditUser extends LitElement {
     .then(data => {
       if (data.status == 'success')
         console.log("The user was updated successfully!")
-      else
-        console.log("Something whent wrong. The user was not updated!")
+      else{
+        console.log("The user was not updated!")
+        console.log(data)
+      }
       
     })
 
