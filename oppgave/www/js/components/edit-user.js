@@ -29,41 +29,45 @@ class EditUser extends LitElement {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
     </head>
+
+    
     <div class="container ${this.checkForUser()}" style="display: ${this.displayUser}">
-      <form class="userForm" method="POST" style="width: 40%">
-          <div class="email">
+      <form class="userForm" method="POST" style="width: 60%">
+          <div class="email d-flex flex-column mt-2 ps-0">
             <label for="email">Email</label>
-            <input type="email" id="uname" class="uname" value="${this.user.uname}">
-            <input type="hidden" id="uid" class="uid" value="${this.user.uid}">
+            <input type="email" id="uname" class="uname" value="${this.user.uname}" style="width: 70%">
+            <input type="hidden" id="uid" class="uid" value="${this.user.uid}" style="width: 70%">
           </div>
-          <div class="firstName">
+          <div class="firstName d-flex flex-column mt-2 ps-0">
             <label for="firstName">First name</label>
-            <input type="text" id="firstName" class="firstName" value="${this.user.firstName}">
+            <input type="text" id="firstName" class="firstName" value="${this.user.firstName}" style="width: 70%">
           </div>
-          <div class="lastName">
+          <div class="lastName d-flex flex-column mt-2 ps-0">
             <label for="lastName">Last name</label>
-            <input type="text" id="lastName" class="lastName" value="${this.user.lastName}">
+            <input type="text" id="lastName" class="lastName" value="${this.user.lastName}" style="width: 70%">
           </div>
-        <!--  <button class="change-password btn btn-sm btn-primary mt-2" id="changePassword" @onclick="${this.changePwd = 'block'}" style="display">Change password</button>   -->
-          <div class="oldpwd">
+        
+          <div class="oldpwd d-flex flex-column mt-2 ps-0">
             <label for="oldpwd">Old password</label>
-            <input type="text" id="oldpwd" class="oldpwd" value="">
+            <input type="text" id="oldpwd" class="oldpwd" value="" style="width: 70%">
           </div>
-          <div class="pwd">
+          <div class="pwd d-flex flex-column mt-2 ps-0">
             <label for="pwd">New password</label>
-            <input type="password" id="pwd" class="pwd" value="">
+            <input type="password" id="pwd" class="pwd" value="" style="width: 70%">
           </div>
-          <div class="confPwd">
-            <label for="confPwd">Confirm password</label>
-            <input type="password" id="confPwd" class="confPwd" value="">
-          </div>
+
+          <button class="btn btn-sm btn-success" @click="${(e) => this.changeUser(e)}">Change user</li>
       </form>
+
+
     </div>
 
     `
   }
 
-  changeUser(){
+    // Change the user!
+  changeUser(e){
+    e.preventDefault();
     var data = new FormData(e.target.form)
 
     fetch('/api/updateUser.php', {
