@@ -57,12 +57,28 @@ class EditUser extends LitElement {
             <label for="confPwd">Confirm password</label>
             <input type="password" id="confPwd" class="confPwd" value="">
           </div>
-          
-          
       </form>
     </div>
 
     `
+  }
+
+  changeUser(){
+    var data = new FormData(e.target.form)
+
+    fetch('/api/updateUser.php', {
+      method: 'POST',
+      body: data
+    }).then(res => res.json())
+    .then(data => {
+      if (data.status == 'success')
+        console.log("The user was updated successfully!")
+      else
+        console.log("Something whent wrong. The user was not updated!")
+      
+    })
+
+   
   }
 
   
