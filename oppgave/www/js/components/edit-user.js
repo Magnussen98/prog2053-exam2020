@@ -5,14 +5,12 @@ class EditUser extends LitElement {
     return {
       user: { type: Object },
       displayUser: { type: String },
-      changePwd: { type: String },
     };
   }
 
   constructor(){
     super();
     this.displayUser = "none"
-    this.changePwd ="noChange"
   }
 
   checkForUser(){
@@ -35,16 +33,15 @@ class EditUser extends LitElement {
       <form class="userForm" method="POST" style="width: 60%">
           <div class="email d-flex flex-column mt-2 ps-0">
             <label for="email">Email</label>
-            <input type="email" id="uname" class="uname" value="${this.user.uname}" style="width: 70%">
-            <input type="hidden" id="id" class="uid" value="${this.user.uid}" style="width: 70%">
+            <input type="email" id="uname" class="uname" value="${this.user.uname}" style="width: 70%" required>
           </div>
           <div class="firstName d-flex flex-column mt-2 ps-0">
             <label for="firstName">First name</label>
-            <input type="text" id="firstName" class="firstName" value="${this.user.firstName}" style="width: 70%">
+            <input type="text" id="firstName" class="firstName" value="${this.user.firstName}" style="width: 70%" required>
           </div>
           <div class="lastName d-flex flex-column mt-2 ps-0">
             <label for="lastName">Last name</label>
-            <input type="text" id="lastName" class="lastName" value="${this.user.lastName}" style="width: 70%">
+            <input type="text" id="lastName" class="lastName" value="${this.user.lastName}" style="width: 70%" required>
           </div>
         
           <div class="oldpwd d-flex flex-column mt-2 ps-0">
@@ -72,12 +69,16 @@ class EditUser extends LitElement {
     e.preventDefault();     // Prevents from auto submitting
 
     
-    var data = new FormData(e.target.form)
-    console.log(Array.from(data))
+    var fData = new FormData(e.target.form)
+
+    fData.append("uid", this.user.uid)
+
+    console.log(Array.from(fData))
+    
 
     fetch('/api/updateUser.php', {
       method: 'POST',
-      body: data
+      body: fData
     }).then(res => res.json())
     .then(data => {
       if (data.status == 'success')
